@@ -1863,6 +1863,13 @@ bool IGES::writeStart( std::ofstream& file )
     return true;
 }
 
+#ifdef _MSC_VER
+// compatibility function for MSVC
+struct tm *gmtime_r(time_t const *timep, struct tm *tmp) {
+    if(gmtime_s(tmp, timep) == 0) return tmp;
+    return 0;
+}
+#endif
 
 // write out the GLOBAL SECTION
 bool IGES::writeGlobals( std::ofstream& file )
